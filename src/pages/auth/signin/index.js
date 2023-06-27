@@ -1,12 +1,14 @@
-import { Link } from 'react-router-dom';
+import SigninForm from 'components/auth/forms/signin';
+import CommonAuthLayout from 'components/auth/layout';
 
 const Signin = () => {
   return (
-    <div>
-      <h1>Signin</h1>
-      <Link to={'/auth/signup'}>Go Register</Link>
-      <Link to={'/'}>Home</Link>
-    </div>
+    <CommonAuthLayout>
+      <SigninForm
+        title={'Welcome Back'}
+        subtitle={'It is nice to see you here again!'}
+      />
+    </CommonAuthLayout>
   );
 };
 
