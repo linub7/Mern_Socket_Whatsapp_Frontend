@@ -1,11 +1,18 @@
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import Cookie from 'js-cookie';
+
+import { logoutAction } from 'store/slices/user';
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const handleLogout = async () => {
+    Cookie.remove('token');
+    dispatch(logoutAction());
+  };
   return (
     <div>
-      <h1>Home</h1>
-      <Link to={'/auth/signup'}>Go Register</Link>
-      <Link to={'/auth/signin'}>Go Login</Link>
+      <h1 className="text-xl font-bold">Home</h1>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 };

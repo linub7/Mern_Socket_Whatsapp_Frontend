@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Toaster } from 'react-hot-toast';
 
 import Signin from 'pages/auth/signin';
 import Signup from 'pages/auth/signup';
@@ -9,21 +9,22 @@ import LoggedInRoutes from 'routes/LoggedInRoutes';
 import NotFound from 'pages/not-found';
 
 const App = () => {
-  const user = useSelector((state) => state.user);
-
   return (
-    <div className="dark">
-      <Routes>
-        <Route element={<NotLoggedInRoutes />}>
-          <Route path="/auth/signup" element={<Signup />} />
-          <Route path="/auth/signin" element={<Signin />} />
-        </Route>
-        <Route element={<LoggedInRoutes />}>
-          <Route path="/" element={<Home />} />
-        </Route>
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </div>
+    <>
+      <Toaster />
+      <div className="dark">
+        <Routes>
+          <Route element={<NotLoggedInRoutes />}>
+            <Route path="/auth/signin" element={<Signin />} />
+            <Route path="/auth/signup" element={<Signup />} />
+          </Route>
+          <Route element={<LoggedInRoutes />}>
+            <Route path="/" element={<Home />} />
+          </Route>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
+    </>
   );
 };
 

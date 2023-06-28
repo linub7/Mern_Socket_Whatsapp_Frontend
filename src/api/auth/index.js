@@ -1,12 +1,11 @@
 import client from 'api/client';
 
-export const signupHandler = async (name, email, password, passwordConfirm) => {
+export const signupHandler = async (formData) => {
   try {
-    const { data } = await client.post(`/auth/signup`, {
-      name,
-      email,
-      password,
-      passwordConfirm,
+    const { data } = await client.post(`/auth/signup`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     });
     return { data };
   } catch (error) {
@@ -15,9 +14,9 @@ export const signupHandler = async (name, email, password, passwordConfirm) => {
   }
 };
 
-export const signinHandler = async (email, password) => {
+export const signinHandler = async (values) => {
   try {
-    const { data } = await client.post(`/auth/signin`, { email, password });
+    const { data } = await client.post(`/auth/signin`, { ...values });
     return { data };
   } catch (error) {
     const { response } = error;
@@ -25,10 +24,10 @@ export const signinHandler = async (email, password) => {
   }
 };
 
-export const forgotPasswordHandler = async (email) => {
+export const forgotPasswordHandler = async (values) => {
   try {
     const { data } = await client.post(`/auth/forgot-password`, {
-      email,
+      ...values,
     });
     return { data };
   } catch (error) {
@@ -37,15 +36,10 @@ export const forgotPasswordHandler = async (email) => {
   }
 };
 
-export const resetPasswordHandler = async (
-  password,
-  passwordConfirm,
-  token
-) => {
+export const resetPasswordHandler = async (values, token) => {
   try {
     const { data } = await client.patch(`/auth/reset-password/${token}`, {
-      password,
-      passwordConfirm,
+      ...values,
     });
     return { data };
   } catch (error) {
@@ -83,16 +77,11 @@ export const updateUserInfoHandler = async (formData, token) => {
   }
 };
 
-export const updateUserPasswordHandler = async (
-  oldPassword,
-  password,
-  passwordConfirm,
-  token
-) => {
+export const updateUserPasswordHandler = async (values, token) => {
   try {
     const { data } = await client.patch(
       `/auth/update-my-password`,
-      { oldPassword, password, passwordConfirm },
+      { ...values },
       {
         headers: {
           Authorization: `Bearer ${token}`,
