@@ -1,6 +1,7 @@
 import { getImage } from 'utils/helper';
 import HomeSideBarConversationItemLeftSide from './left';
 import HomeSideBarConversationItemRightSide from './right';
+import HomeSideBarBorderBottom from '../../border-bottom';
 
 const HomeSideBarConversationItem = ({ item }) => {
   const source = getImage(item?.picture?.url);
@@ -16,7 +17,7 @@ const HomeSideBarConversationItem = ({ item }) => {
           messageCreatedDate={item?.latestMessage?.createdAt}
         />
       </div>
-      <div className="ml-16 border-b dark:border-b-dark_border_1"></div>
+      <HomeSideBarBorderBottom />
     </li>
   );
 };
