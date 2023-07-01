@@ -35,7 +35,43 @@
 @tailwind utilities;
 
 @layer components {
-  .customh1 {
-    @apply text-blue-500 bg-red-200;
+  .container {
+    @apply w-[1700px] h-full;
+  }
+
+  .btn {
+    @apply w-[40px] h-[40px] flex items-center justify-center rounded-full active:bg-dark_hover_1;
+  }
+
+  .p16 {
+    @apply px-[16px];
+  }
+
+  .text-primary {
+    font-size: 16px;
+    line-height: 21px;
+    @apply text-dark_text_1;
+  }
+
+  .text-secondary {
+    font-size: 14px;
+    line-height: 19px;
+    @apply text-dark_text_2;
+  }
+
+  .input {
+    @apply w-full dark:bg-dark_bg_2 p-1.5 dark:text-dark_text_1 rounded-lg flex-1 outline-none;
   }
 }
+
+/* =======> Animations <======= */
+.rotateAnimation {
+  animation: rotate 0.3s forwards;
+}
+
+@keyframes rotate {
+  0 {
+    transfrom: rotate(-90deg);
+  }
+}
+/* ============================ */
