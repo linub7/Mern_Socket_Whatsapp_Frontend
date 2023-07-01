@@ -1,10 +1,14 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { ChatIcon, CommunityIcon, DotsIcon, StoryIcon } from 'assets/svg';
 import { getImage } from 'utils/helper';
 import HomeSidebarHeaderItem from './item';
+import HomeSidebarHeaderMenu from './menu';
 
 const HomeSidebarHeader = () => {
+  const [showMenu, setShowMenu] = useState(false);
+
   const { user } = useSelector((state) => state.user);
   const source = getImage(user.picture);
   return (
@@ -27,8 +31,13 @@ const HomeSidebarHeader = () => {
           <HomeSidebarHeaderItem>
             <ChatIcon className={'dark:fill-dark_svg_1'} />
           </HomeSidebarHeaderItem>
-          <HomeSidebarHeaderItem>
+          <HomeSidebarHeaderItem
+            className="relative"
+            btnStyle={showMenu ? 'bg-dark_hover_1' : ''}
+            onClick={() => setShowMenu(!showMenu)}
+          >
             <DotsIcon className={'dark:fill-dark_svg_1'} />
+            {showMenu ? <HomeSidebarHeaderMenu token={user?.token} /> : null}
           </HomeSidebarHeaderItem>
         </ul>
       </div>

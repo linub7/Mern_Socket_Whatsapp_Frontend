@@ -1,7 +1,12 @@
-const HomeSidebarHeaderItem = ({ children, onClick = () => {} }) => {
+const HomeSidebarHeaderItem = ({
+  children,
+  onClick = () => {},
+  className = '',
+  btnStyle = '',
+}) => {
   return (
-    <li>
-      <button onClick={onclick} className="btn">
+    <li className={`${className}`}>
+      <button onClick={onClick} className={`btn ${btnStyle}`}>
         {children}
       </button>
     </li>
