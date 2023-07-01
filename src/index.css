@@ -10,11 +10,11 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background-color: #222222;
+  background-color: transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgb(224, 201, 251);
+  background-color: #444e54;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
@@ -62,6 +62,11 @@
   .input {
     @apply w-full dark:bg-dark_bg_2 p-1.5 dark:text-dark_text_1 rounded-lg flex-1 outline-none;
   }
+
+  .conversations {
+    height: calc(100vh - 220px);
+    overflow-y: auto;
+  }
 }
 
 /* =======> Animations <======= */
@@ -70,8 +75,8 @@
 }
 
 @keyframes rotate {
-  0 {
-    transfrom: rotate(-90deg);
+  0% {
+    transform: rotate(-90deg);
   }
 }
 /* ============================ */
