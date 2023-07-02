@@ -1,4 +1,4 @@
-const HomeSidebarHeaderItem = ({
+const HomeMenuItem = ({
   children,
   onClick = () => {},
   className = '',
@@ -13,4 +13,4 @@ const HomeSidebarHeaderItem = ({
   );
 };
 
-export default HomeSidebarHeaderItem;
+export default HomeMenuItem;

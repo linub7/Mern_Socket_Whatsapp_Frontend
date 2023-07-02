@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 
 import { ChatIcon, CommunityIcon, DotsIcon, StoryIcon } from 'assets/svg';
 import { getImage } from 'utils/helper';
-import HomeSidebarHeaderItem from './item';
 import HomeSidebarHeaderMenu from './menu';
+import HomeMenuItem from 'components/shared/menu-item';
 
 const HomeSidebarHeader = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -22,23 +22,23 @@ const HomeSidebarHeader = () => {
           />
         </button>
         <ul className="flex items-center gap-x-2.5">
-          <HomeSidebarHeaderItem>
+          <HomeMenuItem>
             <CommunityIcon className={'dark:fill-dark_svg_1'} />
-          </HomeSidebarHeaderItem>
-          <HomeSidebarHeaderItem>
+          </HomeMenuItem>
+          <HomeMenuItem>
             <StoryIcon className={'dark:fill-dark_svg_1'} />
-          </HomeSidebarHeaderItem>
-          <HomeSidebarHeaderItem>
+          </HomeMenuItem>
+          <HomeMenuItem>
             <ChatIcon className={'dark:fill-dark_svg_1'} />
-          </HomeSidebarHeaderItem>
-          <HomeSidebarHeaderItem
+          </HomeMenuItem>
+          <HomeMenuItem
             className="relative"
             btnStyle={showMenu ? 'bg-dark_hover_1' : ''}
             onClick={() => setShowMenu(!showMenu)}
           >
             <DotsIcon className={'dark:fill-dark_svg_1'} />
             {showMenu ? <HomeSidebarHeaderMenu token={user?.token} /> : null}
-          </HomeSidebarHeaderItem>
+          </HomeMenuItem>
         </ul>
       </div>
     </div>

@@ -1,3 +1,5 @@
+import { toCapitalize } from 'utils/helper';
+
 const HomeSideBarConversationItemLeftSide = ({ source, name, message }) => {
   return (
     <div className="flex items-center gap-x-3">
@@ -5,7 +7,9 @@ const HomeSideBarConversationItemLeftSide = ({ source, name, message }) => {
         <img src={source} alt={name} className="w-full h-full object-cover" />
       </div>
       <div className="w-full flex flex-col">
-        <h1 className="font-bold flex items-center gap-x-2">{name}</h1>
+        <h1 className="font-bold flex items-center gap-x-2">
+          {toCapitalize(name)}
+        </h1>
         <div>
           <div className="flex items-center gap-x-1 dark:text-dark_text_2">
             <div className="flex-1 items-center gap-x-1 dark:text-dark_text_2">
