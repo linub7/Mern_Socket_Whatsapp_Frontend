@@ -46,3 +46,6 @@ export const dateHandler = (date) => {
 
   return time;
 };
+
+export const getReceiverId = (user, users) =>
+  users[0]?._id === user?.id ? users[1]?._id : users[0]?._id;

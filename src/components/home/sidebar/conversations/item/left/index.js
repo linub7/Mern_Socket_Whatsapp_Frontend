@@ -9,7 +9,9 @@ const HomeSideBarConversationItemLeftSide = ({ source, name, message }) => {
         <div>
           <div className="flex items-center gap-x-1 dark:text-dark_text_2">
             <div className="flex-1 items-center gap-x-1 dark:text-dark_text_2">
-              {message}
+              {message?.length > 25
+                ? `${message.substring(0, 25)}...`
+                : message}
             </div>
           </div>
         </div>

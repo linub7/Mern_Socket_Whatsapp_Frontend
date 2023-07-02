@@ -18,11 +18,19 @@ const chatSlice = createSlice({
       const { payload } = action;
       state.conversations = payload;
     },
+    addToConversationsAction: (state, action) => {
+      const { payload } = action;
+      state.conversations.push(payload);
+    },
   },
 });
 
 export const {
-  actions: { setActiveConversationAction, getConversationsAction },
+  actions: {
+    setActiveConversationAction,
+    getConversationsAction,
+    addToConversationsAction,
+  },
 } = chatSlice;
 
 export default chatSlice.reducer;
