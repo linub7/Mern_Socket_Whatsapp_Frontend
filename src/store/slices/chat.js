@@ -4,6 +4,7 @@ const initialState = {
   conversations: [],
   activeConversation: {},
   notifications: [],
+  messages: [],
 };
 
 const chatSlice = createSlice({
@@ -22,6 +23,10 @@ const chatSlice = createSlice({
       const { payload } = action;
       state.conversations.push(payload);
     },
+    setActiveConversationMessagesAction: (state, action) => {
+      const { payload } = action;
+      state.messages = payload;
+    },
   },
 });
 
@@ -30,6 +35,7 @@ export const {
     setActiveConversationAction,
     getConversationsAction,
     addToConversationsAction,
+    setActiveConversationMessagesAction,
   },
 } = chatSlice;
 

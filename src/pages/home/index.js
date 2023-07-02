@@ -35,11 +35,7 @@ const Home = () => {
     <div className="h-screen dark:bg-dark_bg_1 flex items-center justify-center py-[19px] overflow-hidden">
       <div className="container h-screen flex">
         <HomeSideBar />
-        {activeConversation?._id ? (
-          <HomeChatScreen activeConversation={activeConversation} />
-        ) : (
-          <HomeWelcomeMessage />
-        )}
+        {activeConversation?._id ? <HomeChatScreen /> : <HomeWelcomeMessage />}
       </div>
     </div>
   );

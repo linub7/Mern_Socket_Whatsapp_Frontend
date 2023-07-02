@@ -68,6 +68,12 @@
     overflow-y: auto;
     overflow-x: hidden;
   }
+
+  .overflow_scrollbar {
+    height: calc(100vh - 120px);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }
 
 /* =======> Animations <======= */
