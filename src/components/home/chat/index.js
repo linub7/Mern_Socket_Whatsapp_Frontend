@@ -7,6 +7,7 @@ import HomeChatScreenMessages from './messages';
 import { setStatusAction } from 'store/slices/status';
 import { getConversationMessagesHandler } from 'api/messages';
 import { setActiveConversationMessagesAction } from 'store/slices/chat';
+import HomeChatScreenActions from './actions';
 
 const HomeChatScreen = () => {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ const HomeChatScreen = () => {
           picture={activeConversation?.picture}
         />
         <HomeChatScreenMessages messages={messages} user={user} />
+        <HomeChatScreenActions />
       </div>
     </div>
   );

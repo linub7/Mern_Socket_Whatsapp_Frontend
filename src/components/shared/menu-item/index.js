@@ -3,10 +3,11 @@ const HomeMenuItem = ({
   onClick = () => {},
   className = '',
   btnStyle = '',
+  type = 'button',
 }) => {
   return (
     <li className={`${className}`}>
-      <button onClick={onClick} className={`btn ${btnStyle}`}>
+      <button onClick={onClick} className={`btn ${btnStyle}`} type={type}>
         {children}
       </button>
     </li>
