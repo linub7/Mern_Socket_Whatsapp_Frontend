@@ -6,10 +6,12 @@ import HomeSideBar from 'components/home/sidebar';
 import { setStatusAction } from 'store/slices/status';
 import { getConversationsHandler } from 'api/conversations';
 import { getConversationsAction } from 'store/slices/chat';
+import HomeWelcomeMessage from 'components/home/welcome';
 
 const Home = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
+  const { activeConversation } = useSelector((state) => state.chat);
 
   useEffect(() => {
     const handleGetConversations = async () => {
@@ -31,8 +33,8 @@ const Home = () => {
   return (
     <div className="h-screen dark:bg-dark_bg_1 flex items-center justify-center py-[19px] overflow-hidden">
       <div className="container h-screen flex">
-        {/* <button onClick={handleLogout}>logout</button> */}
         <HomeSideBar />
+        {activeConversation?._id ? 'home' : <HomeWelcomeMessage />}
       </div>
     </div>
   );
