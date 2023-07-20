@@ -41,7 +41,10 @@ const HomeChatScreen = () => {
           picture={activeConversation?.picture}
         />
         <HomeChatScreenMessages messages={messages} user={user} />
-        <HomeChatScreenActions />
+        <HomeChatScreenActions
+          conversationId={activeConversation?._id}
+          token={user?.token}
+        />
       </div>
     </div>
   );

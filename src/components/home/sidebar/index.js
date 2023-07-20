@@ -7,6 +7,7 @@ import HomeSideBarConversations from './conversations';
 import HomeSideBarSearchResult from './search-result';
 
 const HomeSideBar = () => {
+  const [show, setShow] = useState(false);
   const [searchResult, setSearchResult] = useState([]);
 
   return (
@@ -16,9 +17,15 @@ const HomeSideBar = () => {
       <HomeSideBarSearch
         setSearchResult={setSearchResult}
         searchResultLength={searchResult?.length}
+        show={show}
+        setShow={setShow}
       />
       {searchResult?.length > 0 ? (
-        <HomeSideBarSearchResult searchResult={searchResult} />
+        <HomeSideBarSearchResult
+          searchResult={searchResult}
+          setSearchResult={setSearchResult}
+          setShow={setShow}
+        />
       ) : (
         <HomeSideBarConversations />
       )}

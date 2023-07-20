@@ -9,7 +9,11 @@ import {
   setActiveConversationAction,
 } from 'store/slices/chat';
 
-const HomeSideBarSearchResult = ({ searchResult }) => {
+const HomeSideBarSearchResult = ({
+  searchResult,
+  setShow,
+  setSearchResult,
+}) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const { conversations } = useSelector((state) => state.chat);
@@ -33,6 +37,8 @@ const HomeSideBarSearchResult = ({ searchResult }) => {
     if (idx === -1) {
       dispatch(addToConversationsAction(data?.data?.data));
     }
+    setShow(false);
+    setSearchResult([]);
   };
 
   return (

@@ -1,6 +1,7 @@
 import moment from 'moment';
 
 const HomeChatScreenMessageItem = ({ item, me }) => {
+  // console.log({ me, item });
   return (
     <div
       className={`w-full flex mt-2 space-x-3 max-w-xs ${

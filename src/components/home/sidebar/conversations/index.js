@@ -8,9 +8,10 @@ import { setActiveConversationAction } from 'store/slices/chat';
 import { getReceiverId } from 'utils/helper';
 
 const HomeSideBarConversations = () => {
-  const { conversations } = useSelector((state) => state.chat);
+  const { conversations, activeConversation } = useSelector(
+    (state) => state.chat
+  );
   const { user } = useSelector((state) => state.user);
-  const { activeConversation } = useSelector((state) => state.chat);
 
   const dispatch = useDispatch();
 
@@ -35,13 +36,19 @@ const HomeSideBarConversations = () => {
   return (
     <div className="conversations custom-scrollbar">
       <ul>
-        {conversations?.map((item, index) => (
-          <HomeSideBarConversationItem
-            key={index}
-            item={item}
-            onClick={() => handleClickConversation(item)}
-          />
-        ))}
+        {conversations
+          ?.filter(
+            (conversation) =>
+              conversation?.latestMessage ||
+              conversation?._id === activeConversation?._id
+          )
+          .map((item, index) => (
+            <HomeSideBarConversationItem
+              key={index}
+              item={item}
+              onClick={() => handleClickConversation(item)}
+            />
+          ))}
       </ul>
     </div>
   );

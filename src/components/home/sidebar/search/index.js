@@ -1,12 +1,15 @@
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 
 import { FilterIcon, ReturnIcon, SearchIcon } from 'assets/svg';
 import { searchUsersHandler } from 'api/user';
 
-const HomeSideBarSearch = ({ searchResultLength, setSearchResult }) => {
-  const [show, setShow] = useState(false);
+const HomeSideBarSearch = ({
+  searchResultLength,
+  setSearchResult,
+  show,
+  setShow,
+}) => {
   const { user } = useSelector((state) => state.user);
 
   const handleBlur = () => searchResultLength === 0 && setShow(false);

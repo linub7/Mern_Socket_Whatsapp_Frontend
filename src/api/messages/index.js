@@ -13,3 +13,18 @@ export const getConversationMessagesHandler = async (conversationId, token) => {
     return { err: response?.data };
   }
 };
+
+export const sendMessageHandler = async (formData, token) => {
+  try {
+    const { data } = await client.post(`/messages`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return { data };
+  } catch (error) {
+    const { response } = error;
+    return { err: response?.data };
+  }
+};

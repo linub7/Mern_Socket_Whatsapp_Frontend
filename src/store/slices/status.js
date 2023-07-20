@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   status: 'loading' | 'done',
+  loading: false,
 };
 
 const statusSlice = createSlice({
@@ -12,11 +13,15 @@ const statusSlice = createSlice({
       const { payload } = action;
       state.status = payload;
     },
+    setLoadingAction: (state, action) => {
+      const { payload } = action;
+      state.loading = payload;
+    },
   },
 });
 
 export const {
-  actions: { setStatusAction },
+  actions: { setStatusAction, setLoadingAction },
 } = statusSlice;
 
 export default statusSlice.reducer;
