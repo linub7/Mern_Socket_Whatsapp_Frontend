@@ -1,16 +1,16 @@
-import { useState } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 
 import { CloseIcon, EmojiIcon } from 'assets/svg';
 import HomeMenuItem from '../menu-item';
 
-const EmojiPickerComponent = ({ onEmojiClick = () => {} }) => {
-  const [isEmojiVisible, setIsEmojiVisible] = useState(false);
-
-  const handleToggleEmojiPicker = () => setIsEmojiVisible((prev) => !prev);
+const EmojiPickerComponent = ({
+  onEmojiClick = () => {},
+  onClick = () => {},
+  isEmojiVisible,
+}) => {
   return (
     <>
-      <HomeMenuItem onClick={handleToggleEmojiPicker}>
+      <HomeMenuItem onClick={onClick}>
         {isEmojiVisible ? (
           <CloseIcon className={'dark:fill-dark_svg_1'} />
         ) : (

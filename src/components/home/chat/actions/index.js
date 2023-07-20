@@ -13,6 +13,9 @@ import { setLoadingAction } from 'store/slices/status';
 const HomeChatScreenActions = ({ conversationId, token }) => {
   const [message, setMessage] = useState('');
   const [cursorPosition, setCursorPosition] = useState();
+  const [isEmojiVisible, setIsEmojiVisible] = useState(false);
+  const [isVisibleAttachment, setIsVisibleAttachment] = useState(false);
+
   const textRef = useRef();
 
   useEffect(() => {
@@ -22,6 +25,14 @@ const HomeChatScreenActions = ({ conversationId, token }) => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.status);
 
+  const handleToggleEmojiPicker = () => {
+    setIsEmojiVisible((prev) => !prev);
+    setIsVisibleAttachment(false);
+  };
+  const handleToggleAttachment = () => {
+    setIsVisibleAttachment((prev) => !prev);
+    setIsEmojiVisible(false);
+  };
   const handleChangeInput = (e) => setMessage(e.target?.value);
 
   const handleEmojiPick = (emojiData, e) => {
@@ -63,8 +74,15 @@ const HomeChatScreenActions = ({ conversationId, token }) => {
     >
       <div className="w-full flex items-center gap-x-2">
         <ul className="flex gap-x-2">
-          <EmojiPickerComponent onEmojiClick={handleEmojiPick} />
-          <Attachment />
+          <EmojiPickerComponent
+            onEmojiClick={handleEmojiPick}
+            isEmojiVisible={isEmojiVisible}
+            onClick={handleToggleEmojiPicker}
+          />
+          <Attachment
+            isVisibleAttachment={isVisibleAttachment}
+            onClick={handleToggleAttachment}
+          />
         </ul>
         <HomeChatScreenInput
           placeholder={'Type a message'}
