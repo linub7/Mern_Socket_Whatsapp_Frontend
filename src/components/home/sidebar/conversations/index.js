@@ -47,6 +47,7 @@ const HomeSideBarConversations = () => {
               key={index}
               item={item}
               onClick={() => handleClickConversation(item)}
+              activeConversationId={activeConversation?._id}
             />
           ))}
       </ul>
