@@ -1,4 +1,9 @@
-const HomeChatScreenInput = ({ placeholder, value, onChange = () => {} }) => {
+const HomeChatScreenInput = ({
+  placeholder,
+  value,
+  onChange = () => {},
+  textRef,
+}) => {
   return (
     <div className="w-full">
       <input
@@ -7,6 +12,7 @@ const HomeChatScreenInput = ({ placeholder, value, onChange = () => {} }) => {
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        ref={textRef}
       />
     </div>
   );

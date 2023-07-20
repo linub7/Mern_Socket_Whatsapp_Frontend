@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -12,11 +12,28 @@ import { setLoadingAction } from 'store/slices/status';
 
 const HomeChatScreenActions = ({ conversationId, token }) => {
   const [message, setMessage] = useState('');
+  const [cursorPosition, setCursorPosition] = useState();
+  const textRef = useRef();
+
+  useEffect(() => {
+    textRef.current.selectionEnd = cursorPosition;
+  }, [cursorPosition]);
 
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.status);
 
   const handleChangeInput = (e) => setMessage(e.target?.value);
+
+  const handleEmojiPick = (emojiData, e) => {
+    const { emoji } = emojiData;
+    const reference = textRef.current;
+    reference.focus();
+    const start = message?.substring(0, reference.selectionStart);
+    const end = message?.substring(reference.selectionStart);
+    const newMessage = `${start}${emoji}${end}`;
+    setMessage(newMessage);
+    setCursorPosition(start?.length + emoji?.length);
+  };
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
@@ -46,13 +63,14 @@ const HomeChatScreenActions = ({ conversationId, token }) => {
     >
       <div className="w-full flex items-center gap-x-2">
         <ul className="flex gap-x-2">
-          <EmojiPickerComponent />
+          <EmojiPickerComponent onEmojiClick={handleEmojiPick} />
           <Attachment />
         </ul>
         <HomeChatScreenInput
           placeholder={'Type a message'}
           value={message}
           onChange={handleChangeInput}
+          textRef={textRef}
         />
         <HomeChatScreenSendButton disabled={!message} loading={loading} />
       </div>
