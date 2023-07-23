@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 
@@ -6,14 +7,16 @@ import { setStatusAction } from 'store/slices/status';
 import { openOrCreateConversationHandler } from 'api/conversations';
 import { setActiveConversationAction } from 'store/slices/chat';
 import { getReceiverId } from 'utils/helper';
+import SocketContext from 'context/SocketContext';
 
 const HomeSideBarConversations = () => {
+  const socket = useContext(SocketContext);
+
+  const dispatch = useDispatch();
   const { conversations, activeConversation } = useSelector(
     (state) => state.chat
   );
   const { user } = useSelector((state) => state.user);
-
-  const dispatch = useDispatch();
 
   const handleClickConversation = async (item) => {
     if (activeConversation?._id === item?._id) return;
@@ -29,8 +32,9 @@ const HomeSideBarConversations = () => {
       dispatch(setStatusAction('done'));
       return toast.error(err?.message);
     }
-    dispatch(setStatusAction('done'));
-    dispatch(setActiveConversationAction(data?.data?.data));
+    await dispatch(setStatusAction('done'));
+    await dispatch(setActiveConversationAction(data?.data?.data));
+    socket.emit('join-conversation', data?.data?.data?._id);
   };
 
   return (
