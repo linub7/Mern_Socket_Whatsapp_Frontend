@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -9,6 +9,7 @@ import HomeChatScreenSendButton from '../send-button';
 import { sendMessageHandler } from 'api/messages';
 import { addMessageToActiveConversationAction } from 'store/slices/chat';
 import { setLoadingAction } from 'store/slices/status';
+import SocketContext from 'context/SocketContext';
 
 const HomeChatScreenActions = ({ conversationId, token }) => {
   const [message, setMessage] = useState('');
@@ -21,6 +22,8 @@ const HomeChatScreenActions = ({ conversationId, token }) => {
   useEffect(() => {
     textRef.current.selectionEnd = cursorPosition;
   }, [cursorPosition]);
+
+  const socket = useContext(SocketContext);
 
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.status);
@@ -65,8 +68,10 @@ const HomeChatScreenActions = ({ conversationId, token }) => {
 
     dispatch(setLoadingAction(false));
     dispatch(addMessageToActiveConversationAction(data?.data?.data));
+    socket.emit('send-message', data?.data?.data);
     setMessage('');
   };
+
   return (
     <form
       onSubmit={handleSendMessage}

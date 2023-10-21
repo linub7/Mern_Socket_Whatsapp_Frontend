@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 
@@ -8,6 +9,7 @@ import {
   addToConversationsAction,
   setActiveConversationAction,
 } from 'store/slices/chat';
+import SocketContext from 'context/SocketContext';
 
 const HomeSideBarSearchResult = ({
   searchResult,
@@ -15,6 +17,8 @@ const HomeSideBarSearchResult = ({
   setSearchResult,
 }) => {
   const dispatch = useDispatch();
+  const socket = useContext(SocketContext);
+
   const { user } = useSelector((state) => state.user);
   const { conversations } = useSelector((state) => state.chat);
 
@@ -29,8 +33,9 @@ const HomeSideBarSearchResult = ({
       dispatch(setStatusAction('done'));
       return toast.error(err?.message);
     }
-    dispatch(setStatusAction('done'));
-    dispatch(setActiveConversationAction(data?.data?.data));
+    await dispatch(setStatusAction('done'));
+    await dispatch(setActiveConversationAction(data?.data?.data));
+    socket.emit('join-conversation', data?.data?.data?._id);
     const idx = conversations.findIndex(
       (item) => item?._id === data?.data?.data?._id
     );

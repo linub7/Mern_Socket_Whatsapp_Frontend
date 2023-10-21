@@ -24,6 +24,7 @@ const HomeSideBarConversationItem = ({
           source={source}
           name={item?.name}
           message={item?.latestMessage?.message}
+          users={item?.users}
         />
         <HomeSideBarConversationItemRightSide
           messageCreatedDate={item?.latestMessage?.createdAt}

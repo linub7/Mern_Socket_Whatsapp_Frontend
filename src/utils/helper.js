@@ -52,3 +52,9 @@ export const getReceiverId = (user, users) =>
 
 export const toCapitalize = (word) =>
   `${word?.charAt(0).toUpperCase()}${word?.slice(1)}`;
+
+export const getConversationName = (user, users) =>
+  users[0]?._id === user?.id ? users[1]?.name : users[0]?.name;
+
+export const getConversationPicture = (user, users) =>
+  users[0]?._id === user?.id ? users[1]?.picture?.url : users[0]?.picture?.url;
