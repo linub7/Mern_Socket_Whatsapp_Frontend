@@ -66,8 +66,8 @@ const HomeChatScreenActions = ({ conversationId, token }) => {
       return toast.error(err?.message);
     }
 
-    dispatch(setLoadingAction(false));
-    dispatch(addMessageToActiveConversationAction(data?.data?.data));
+    await dispatch(setLoadingAction(false));
+    await dispatch(addMessageToActiveConversationAction(data?.data?.data));
     socket.emit('send-message', data?.data?.data);
     setMessage('');
   };

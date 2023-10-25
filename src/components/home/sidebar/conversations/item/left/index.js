@@ -1,6 +1,11 @@
 import { toCapitalize } from 'utils/helper';
 
-const HomeSideBarConversationItemLeftSide = ({ source, name, message }) => {
+const HomeSideBarConversationItemLeftSide = ({
+  source,
+  name,
+  message,
+  convName,
+}) => {
   return (
     <div className="flex items-center gap-x-3">
       <div className="relative min-w-[50px] max-w-[50px] h-[50px] rounded-full overflow-hidden">
@@ -8,7 +13,7 @@ const HomeSideBarConversationItemLeftSide = ({ source, name, message }) => {
       </div>
       <div className="w-full flex flex-col">
         <h1 className="font-bold flex items-center gap-x-2">
-          {toCapitalize(name)}
+          {toCapitalize(convName)}
         </h1>
         <div>
           <div className="flex items-center gap-x-1 dark:text-dark_text_2">

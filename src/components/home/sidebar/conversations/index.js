@@ -32,6 +32,7 @@ const HomeSideBarConversations = () => {
       dispatch(setStatusAction('done'));
       return toast.error(err?.message);
     }
+    // make sure to use await even vscode says it doesn't effect
     await dispatch(setStatusAction('done'));
     await dispatch(setActiveConversationAction(data?.data?.data));
     socket.emit('join-conversation', data?.data?.data?._id);

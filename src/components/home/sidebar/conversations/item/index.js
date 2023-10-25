@@ -1,4 +1,10 @@
-import { getImage } from 'utils/helper';
+import { useSelector } from 'react-redux';
+
+import {
+  getConversationName,
+  getConversationPicture,
+  getImage,
+} from 'utils/helper';
 import HomeSideBarConversationItemLeftSide from './left';
 import HomeSideBarConversationItemRightSide from './right';
 import HomeSideBarBorderBottom from '../../border-bottom';
@@ -8,7 +14,10 @@ const HomeSideBarConversationItem = ({
   item,
   onClick = () => {},
 }) => {
-  const source = getImage(item?.picture?.url);
+  const { user } = useSelector((state) => state.user);
+  const convName = getConversationName(user, item?.users);
+  const conversationImage = getConversationPicture(user, item?.users);
+  const source = getImage(conversationImage);
 
   return (
     <li
@@ -24,7 +33,7 @@ const HomeSideBarConversationItem = ({
           source={source}
           name={item?.name}
           message={item?.latestMessage?.message}
-          users={item?.users}
+          convName={convName}
         />
         <HomeSideBarConversationItemRightSide
           messageCreatedDate={item?.latestMessage?.createdAt}

@@ -45,6 +45,29 @@ const chatSlice = createSlice({
       state.conversations.splice(idx, 1);
       state.conversations.unshift(conversation);
     },
+    updateActiveConversationAndItsMessages: (state, action) => {
+      const { payload } = action;
+      const activeConversation = state.activeConversation;
+      // update messages
+      if (activeConversation?._id === payload?.conversation?._id) {
+        state.messages = [...state.messages, payload];
+      }
+      // update conversation
+      const relatedConversation = state.conversations.find(
+        (conversation) =>
+          conversation?._id?.toString() ===
+          payload?.conversation?._id?.toString()
+      );
+      const conversation = {
+        ...relatedConversation,
+        latestMessage: payload,
+      };
+      const idx = state.conversations.findIndex(
+        (el) => el?._id === conversation._id
+      );
+      state.conversations.splice(idx, 1);
+      state.conversations.unshift(conversation);
+    },
   },
 });
 
@@ -55,6 +78,7 @@ export const {
     addToConversationsAction,
     setActiveConversationMessagesAction,
     addMessageToActiveConversationAction,
+    updateActiveConversationAndItsMessages,
   },
 } = chatSlice;
 

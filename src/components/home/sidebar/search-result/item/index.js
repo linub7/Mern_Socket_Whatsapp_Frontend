@@ -14,6 +14,7 @@ const HomeSideBarSearchResultItem = ({ item, onClick }) => {
           source={source}
           name={item?.name}
           message={item?.status}
+          convName={item?.name}
         />
       </div>
       <HomeSideBarBorderBottom />

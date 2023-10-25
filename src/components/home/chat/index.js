@@ -8,11 +8,22 @@ import { setStatusAction } from 'store/slices/status';
 import { getConversationMessagesHandler } from 'api/messages';
 import { setActiveConversationMessagesAction } from 'store/slices/chat';
 import HomeChatScreenActions from './actions';
+import {
+  getConversationName,
+  getConversationPicture,
+  getImage,
+} from 'utils/helper';
 
 const HomeChatScreen = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const { messages, activeConversation } = useSelector((state) => state.chat);
+
+  const conversationImage = getConversationPicture(
+    user,
+    activeConversation?.users
+  );
+  const source = getImage(conversationImage);
 
   useEffect(() => {
     const handleGetActiveConversationMessages = async () => {
@@ -33,12 +44,15 @@ const HomeChatScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeConversation?._id]);
 
+  const convName = getConversationName(user, activeConversation?.users);
+
   return (
     <div className="relative w-full h-full border-l dark:border-l-dark_border_2 select-none overflow-hidden">
       <div>
         <HomeChatScreenHeader
-          name={activeConversation?.name}
+          name={convName}
           picture={activeConversation?.picture}
+          source={source}
         />
         <HomeChatScreenMessages messages={messages} user={user} />
         <HomeChatScreenActions
