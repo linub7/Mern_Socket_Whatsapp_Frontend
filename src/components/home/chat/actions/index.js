@@ -11,7 +11,12 @@ import { addMessageToActiveConversationAction } from 'store/slices/chat';
 import { setLoadingAction } from 'store/slices/status';
 import SocketContext from 'context/SocketContext';
 
-const HomeChatScreenActions = ({ conversationId, token }) => {
+const HomeChatScreenActions = ({
+  conversationId,
+  token,
+  isTyping,
+  setIsTyping,
+}) => {
   const [message, setMessage] = useState('');
   const [cursorPosition, setCursorPosition] = useState();
   const [isEmojiVisible, setIsEmojiVisible] = useState(false);
@@ -36,7 +41,22 @@ const HomeChatScreenActions = ({ conversationId, token }) => {
     setIsVisibleAttachment((prev) => !prev);
     setIsEmojiVisible(false);
   };
-  const handleChangeInput = (e) => setMessage(e.target?.value);
+  const handleChangeInput = (e) => {
+    setMessage(e.target?.value);
+    if (!isTyping) {
+      setIsTyping(true);
+      socket.emit('typing', conversationId);
+    }
+    const lastTypingTime = new Date().getTime(); // getTime() returns in ms
+    const timer = 2000;
+    setTimeout(() => {
+      const now = new Date().getTime();
+      if (now - lastTypingTime >= timer && isTyping) {
+        socket.emit('stop-typing', conversationId);
+        setIsTyping(false);
+      }
+    }, timer);
+  };
 
   const handleEmojiPick = (emojiData, e) => {
     const { emoji } = emojiData;

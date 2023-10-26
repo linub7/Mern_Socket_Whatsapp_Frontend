@@ -15,6 +15,7 @@ import SocketContext from 'context/SocketContext';
 
 const Home = () => {
   const [onlineUsers, setOnlineUsers] = useState([]);
+  const [isTyping, setIsTyping] = useState(false);
 
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
@@ -41,6 +42,10 @@ const Home = () => {
     socket.on('receive-message', (message) => {
       dispatch(updateActiveConversationAndItsMessagesAction(message));
     });
+
+    // listening to typing and stop-typing
+    socket.on('typing', () => setIsTyping(true));
+    socket.on('stop-typing', () => setIsTyping(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -61,7 +66,11 @@ const Home = () => {
       <div className="container h-screen flex">
         <HomeSideBar onlineUsers={onlineUsers} />
         {activeConversation?._id ? (
-          <HomeChatScreen onlineUsers={onlineUsers} />
+          <HomeChatScreen
+            onlineUsers={onlineUsers}
+            isTyping={isTyping}
+            setIsTyping={setIsTyping}
+          />
         ) : (
           <HomeWelcomeMessage />
         )}

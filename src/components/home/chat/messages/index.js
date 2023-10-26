@@ -1,13 +1,14 @@
 import { useEffect, useRef } from 'react';
 
 import HomeChatScreenMessageItem from './item';
+import HomeChatScreenIsTyping from '../is-typing';
 
-const HomeChatScreenMessages = ({ messages, user }) => {
+const HomeChatScreenMessages = ({ messages, user, isTyping }) => {
   const endRef = useRef();
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, isTyping]);
 
   const scrollToBottom = () =>
     endRef.current.scrollIntoView({
@@ -24,6 +25,8 @@ const HomeChatScreenMessages = ({ messages, user }) => {
             me={item?.sender?.id === user?.id}
           />
         ))}
+
+        {isTyping ? <HomeChatScreenIsTyping /> : null}
         <div className="mt-2" ref={endRef}></div>
       </div>
     </div>

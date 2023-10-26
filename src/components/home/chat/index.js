@@ -15,8 +15,9 @@ import {
   getReceiverId,
 } from 'utils/helper';
 
-const HomeChatScreen = ({ onlineUsers }) => {
+const HomeChatScreen = ({ onlineUsers, isTyping, setIsTyping }) => {
   const [userStatus, setUserStatus] = useState('offline');
+
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const { messages, activeConversation } = useSelector((state) => state.chat);
@@ -69,10 +70,16 @@ const HomeChatScreen = ({ onlineUsers }) => {
           source={source}
           userStatus={userStatus}
         />
-        <HomeChatScreenMessages messages={messages} user={user} />
+        <HomeChatScreenMessages
+          messages={messages}
+          user={user}
+          isTyping={isTyping}
+        />
         <HomeChatScreenActions
           conversationId={activeConversation?._id}
           token={user?.token}
+          isTyping={isTyping}
+          setIsTyping={setIsTyping}
         />
       </div>
     </div>
