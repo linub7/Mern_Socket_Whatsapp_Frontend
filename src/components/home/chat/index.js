@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 
@@ -12,9 +12,11 @@ import {
   getConversationName,
   getConversationPicture,
   getImage,
+  getReceiverId,
 } from 'utils/helper';
 
-const HomeChatScreen = () => {
+const HomeChatScreen = ({ onlineUsers }) => {
+  const [userStatus, setUserStatus] = useState('offline');
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const { messages, activeConversation } = useSelector((state) => state.chat);
@@ -44,6 +46,18 @@ const HomeChatScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeConversation?._id]);
 
+  const receiverId = getReceiverId(user, activeConversation?.users);
+
+  useEffect(() => {
+    const status = onlineUsers?.find(
+      (onlineUser) => onlineUser?.userId === receiverId
+    );
+    const result = status !== undefined ? 'online' : 'offline';
+    setUserStatus(result);
+
+    return () => {};
+  }, [receiverId, onlineUsers?.length]);
+
   const convName = getConversationName(user, activeConversation?.users);
 
   return (
@@ -53,6 +67,7 @@ const HomeChatScreen = () => {
           name={convName}
           picture={activeConversation?.picture}
           source={source}
+          userStatus={userStatus}
         />
         <HomeChatScreenMessages messages={messages} user={user} />
         <HomeChatScreenActions

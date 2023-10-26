@@ -45,7 +45,7 @@ const chatSlice = createSlice({
       state.conversations.splice(idx, 1);
       state.conversations.unshift(conversation);
     },
-    updateActiveConversationAndItsMessages: (state, action) => {
+    updateActiveConversationAndItsMessagesAction: (state, action) => {
       const { payload } = action;
       const activeConversation = state.activeConversation;
       // update messages
@@ -78,7 +78,7 @@ export const {
     addToConversationsAction,
     setActiveConversationMessagesAction,
     addMessageToActiveConversationAction,
-    updateActiveConversationAndItsMessages,
+    updateActiveConversationAndItsMessagesAction,
   },
 } = chatSlice;
 

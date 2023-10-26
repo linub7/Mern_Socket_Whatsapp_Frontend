@@ -58,3 +58,6 @@ export const getConversationName = (user, users) =>
 
 export const getConversationPicture = (user, users) =>
   users[0]?._id === user?.id ? users[1]?.picture?.url : users[0]?.picture?.url;
+
+export const getConversationId = (user, users) =>
+  users[0]?._id !== user?._id ? users[1]?._id : users[0]?._id;

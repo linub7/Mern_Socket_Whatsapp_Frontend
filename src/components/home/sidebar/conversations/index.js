@@ -9,7 +9,7 @@ import { setActiveConversationAction } from 'store/slices/chat';
 import { getReceiverId } from 'utils/helper';
 import SocketContext from 'context/SocketContext';
 
-const HomeSideBarConversations = () => {
+const HomeSideBarConversations = ({ onlineUsers }) => {
   const socket = useContext(SocketContext);
 
   const dispatch = useDispatch();
@@ -53,6 +53,7 @@ const HomeSideBarConversations = () => {
               item={item}
               onClick={() => handleClickConversation(item)}
               activeConversationId={activeConversation?._id}
+              onlineUsers={onlineUsers}
             />
           ))}
       </ul>

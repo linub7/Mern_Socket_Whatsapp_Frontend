@@ -5,10 +5,15 @@ const HomeSideBarConversationItemLeftSide = ({
   name,
   message,
   convName,
+  online,
 }) => {
   return (
     <div className="flex items-center gap-x-3">
-      <div className="relative min-w-[50px] max-w-[50px] h-[50px] rounded-full overflow-hidden">
+      <div
+        className={`relative min-w-[50px] max-w-[50px] h-[50px] rounded-full overflow-hidden ${
+          online ? 'online' : ''
+        }`}
+      >
         <img src={source} alt={name} className="w-full h-full object-cover" />
       </div>
       <div className="w-full flex flex-col">

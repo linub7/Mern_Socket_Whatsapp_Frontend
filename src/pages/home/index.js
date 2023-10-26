@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 
@@ -7,13 +7,15 @@ import { setStatusAction } from 'store/slices/status';
 import { getConversationsHandler } from 'api/conversations';
 import {
   getConversationsAction,
-  updateActiveConversationAndItsMessages,
+  updateActiveConversationAndItsMessagesAction,
 } from 'store/slices/chat';
 import HomeWelcomeMessage from 'components/home/welcome';
 import HomeChatScreen from 'components/home/chat';
 import SocketContext from 'context/SocketContext';
 
 const Home = () => {
+  const [onlineUsers, setOnlineUsers] = useState([]);
+
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const { activeConversation } = useSelector((state) => state.chat);
@@ -22,6 +24,10 @@ const Home = () => {
   // join user into the socket io
   useEffect(() => {
     socket.emit('join', user?.id);
+    // get online users
+    socket.on('get-online-users', (onlineUsers) => {
+      setOnlineUsers(onlineUsers);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
@@ -33,7 +39,7 @@ const Home = () => {
 
   useEffect(() => {
     socket.on('receive-message', (message) => {
-      dispatch(updateActiveConversationAndItsMessages(message));
+      dispatch(updateActiveConversationAndItsMessagesAction(message));
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -53,8 +59,12 @@ const Home = () => {
   return (
     <div className="h-screen dark:bg-dark_bg_1 flex items-center justify-center pt-[19px] overflow-hidden">
       <div className="container h-screen flex">
-        <HomeSideBar />
-        {activeConversation?._id ? <HomeChatScreen /> : <HomeWelcomeMessage />}
+        <HomeSideBar onlineUsers={onlineUsers} />
+        {activeConversation?._id ? (
+          <HomeChatScreen onlineUsers={onlineUsers} />
+        ) : (
+          <HomeWelcomeMessage />
+        )}
       </div>
     </div>
   );

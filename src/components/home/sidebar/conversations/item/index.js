@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import {
@@ -10,11 +11,27 @@ import HomeSideBarConversationItemRightSide from './right';
 import HomeSideBarBorderBottom from '../../border-bottom';
 
 const HomeSideBarConversationItem = ({
+  onlineUsers,
   activeConversationId,
   item,
   onClick = () => {},
 }) => {
+  const [isOnline, setIsOnline] = useState(false);
   const { user } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    for (const el of item?.users) {
+      if (el?.id !== user?.id) {
+        const status = onlineUsers?.find(
+          (onlineUser) => onlineUser?.userId === el?.id
+        );
+        const result = status !== undefined ? true : false;
+        setIsOnline(result);
+      }
+    }
+    return () => {};
+  }, [onlineUsers?.length]);
+
   const convName = getConversationName(user, item?.users);
   const conversationImage = getConversationPicture(user, item?.users);
   const source = getImage(conversationImage);
@@ -34,6 +51,7 @@ const HomeSideBarConversationItem = ({
           name={item?.name}
           message={item?.latestMessage?.message}
           convName={convName}
+          online={isOnline}
         />
         <HomeSideBarConversationItemRightSide
           messageCreatedDate={item?.latestMessage?.createdAt}

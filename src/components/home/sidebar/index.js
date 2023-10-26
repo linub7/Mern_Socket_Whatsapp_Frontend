@@ -6,7 +6,7 @@ import HomeSideBarSearch from './search';
 import HomeSideBarConversations from './conversations';
 import HomeSideBarSearchResult from './search-result';
 
-const HomeSideBar = () => {
+const HomeSideBar = ({ onlineUsers }) => {
   const [show, setShow] = useState(false);
   const [searchResult, setSearchResult] = useState([]);
 
@@ -27,7 +27,7 @@ const HomeSideBar = () => {
           setShow={setShow}
         />
       ) : (
-        <HomeSideBarConversations />
+        <HomeSideBarConversations onlineUsers={onlineUsers} />
       )}
     </div>
   );

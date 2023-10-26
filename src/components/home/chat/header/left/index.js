@@ -1,6 +1,6 @@
 import { toCapitalize } from 'utils/helper';
 
-const HomeChatScreenHeaderLeftSide = ({ source, name, status }) => {
+const HomeChatScreenHeaderLeftSide = ({ source, name, userStatus }) => {
   return (
     <div className="flex items-center gap-x-4">
       <button className="btn">
@@ -14,7 +14,7 @@ const HomeChatScreenHeaderLeftSide = ({ source, name, status }) => {
         <h1 className="dark:text-white text-base font-bold">
           {toCapitalize(name?.split(' ')[0])}
         </h1>
-        <span className="text-xs dark:text-dark_svg_2">{status}</span>
+        <span className="text-xs dark:text-dark_svg_2">{userStatus}</span>
       </div>
     </div>
   );
