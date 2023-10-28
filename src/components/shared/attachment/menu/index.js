@@ -1,12 +1,7 @@
-import {
-  CameraIcon,
-  ContactIcon,
-  DocumentIcon,
-  PhotoIcon,
-  PollIcon,
-  StickerIcon,
-} from 'assets/svg';
+import { CameraIcon, ContactIcon, PollIcon, StickerIcon } from 'assets/svg';
 import AttachmentMenuItem from './item';
+import AttachmentMenuPhoto from './photo-attachment';
+import AttachmentMenuDocument from './document-attachment';
 
 const AttachmentMenu = () => {
   return (
@@ -20,12 +15,7 @@ const AttachmentMenu = () => {
       >
         <ContactIcon />
       </AttachmentMenuItem>
-      <AttachmentMenuItem
-        btnStyle="bg-[#5F66CD]"
-        onClick={() => console.log('document')}
-      >
-        <DocumentIcon />
-      </AttachmentMenuItem>
+      <AttachmentMenuDocument />
       <AttachmentMenuItem
         btnStyle="bg-[#D3396D]"
         onClick={() => console.log('camera')}
@@ -35,12 +25,7 @@ const AttachmentMenu = () => {
       <AttachmentMenuItem onClick={() => console.log('Sticker')}>
         <StickerIcon />
       </AttachmentMenuItem>
-      <AttachmentMenuItem
-        btnStyle="bg-[#BF59CF]"
-        onClick={() => console.log('photo')}
-      >
-        <PhotoIcon />
-      </AttachmentMenuItem>
+      <AttachmentMenuPhoto />
     </ul>
   );
 };

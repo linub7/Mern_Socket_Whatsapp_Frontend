@@ -5,6 +5,7 @@ const initialState = {
   activeConversation: {},
   notifications: [],
   messages: [],
+  files: [],
 };
 
 const chatSlice = createSlice({
@@ -68,6 +69,10 @@ const chatSlice = createSlice({
       state.conversations.splice(idx, 1);
       state.conversations.unshift(conversation);
     },
+    addFilesAction: (state, action) => {
+      const { payload } = action;
+      state.files = [...state.files, payload];
+    },
   },
 });
 
@@ -79,6 +84,7 @@ export const {
     setActiveConversationMessagesAction,
     addMessageToActiveConversationAction,
     updateActiveConversationAndItsMessagesAction,
+    addFilesAction,
   },
 } = chatSlice;
 
