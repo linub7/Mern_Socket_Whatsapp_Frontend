@@ -14,13 +14,16 @@ import {
   getImage,
   getReceiverId,
 } from 'utils/helper';
+import FilesPreview from './preview/files';
 
 const HomeChatScreen = ({ onlineUsers, isTyping, setIsTyping }) => {
   const [userStatus, setUserStatus] = useState('offline');
 
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  const { messages, activeConversation } = useSelector((state) => state.chat);
+  const { messages, activeConversation, files } = useSelector(
+    (state) => state.chat
+  );
 
   const conversationImage = getConversationPicture(
     user,
@@ -70,17 +73,23 @@ const HomeChatScreen = ({ onlineUsers, isTyping, setIsTyping }) => {
           source={source}
           userStatus={userStatus}
         />
-        <HomeChatScreenMessages
-          messages={messages}
-          user={user}
-          isTyping={isTyping}
-        />
-        <HomeChatScreenActions
-          conversationId={activeConversation?._id}
-          token={user?.token}
-          isTyping={isTyping}
-          setIsTyping={setIsTyping}
-        />
+        {files?.length > 0 ? (
+          <FilesPreview />
+        ) : (
+          <>
+            <HomeChatScreenMessages
+              messages={messages}
+              user={user}
+              isTyping={isTyping}
+            />
+            <HomeChatScreenActions
+              conversationId={activeConversation?._id}
+              token={user?.token}
+              isTyping={isTyping}
+              setIsTyping={setIsTyping}
+            />
+          </>
+        )}
       </div>
     </div>
   );

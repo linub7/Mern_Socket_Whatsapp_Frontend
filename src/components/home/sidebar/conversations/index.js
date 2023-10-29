@@ -5,7 +5,10 @@ import toast from 'react-hot-toast';
 import HomeSideBarConversationItem from './item';
 import { setStatusAction } from 'store/slices/status';
 import { openOrCreateConversationHandler } from 'api/conversations';
-import { setActiveConversationAction } from 'store/slices/chat';
+import {
+  makeEmptyFilesAction,
+  setActiveConversationAction,
+} from 'store/slices/chat';
 import { getReceiverId } from 'utils/helper';
 import SocketContext from 'context/SocketContext';
 
@@ -20,6 +23,7 @@ const HomeSideBarConversations = ({ onlineUsers }) => {
 
   const handleClickConversation = async (item) => {
     if (activeConversation?._id === item?._id) return;
+    dispatch(makeEmptyFilesAction());
     const receiverId = getReceiverId(user, item?.users);
 
     dispatch(setStatusAction('loading'));

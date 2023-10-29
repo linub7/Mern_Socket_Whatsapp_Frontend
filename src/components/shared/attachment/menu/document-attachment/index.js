@@ -6,6 +6,8 @@ import { DocumentIcon } from 'assets/svg';
 import AttachmentMenuItem from '../item';
 import { DOCUMENT_SIZE, DOCUMENT_TYPES } from 'constants';
 import { addFilesAction } from 'store/slices/chat';
+import { getFileType } from 'utils/helper';
+import AttachmentInput from 'components/shared/attachment-input';
 
 const AttachmentMenuDocument = () => {
   const inputRef = useRef(null);
@@ -16,7 +18,6 @@ const AttachmentMenuDocument = () => {
 
   const handleChange = (e) => {
     let files = Array.from(e.target.files);
-    console.log(files);
     files.forEach((item) => {
       if (
         item?.type !== 'application/pdf' &&
@@ -50,7 +51,7 @@ const AttachmentMenuDocument = () => {
         dispatch(
           addFilesAction({
             file: item,
-            type: item?.type?.split('/')[1],
+            type: getFileType(item?.type),
           })
         );
       };
@@ -60,13 +61,10 @@ const AttachmentMenuDocument = () => {
     <>
       <AttachmentMenuItem btnStyle="bg-[#5F66CD]" onClick={handleClick}>
         <DocumentIcon />
-        <input
-          type="file"
-          multiple
-          hidden
-          ref={inputRef}
+        <AttachmentInput
           accept={DOCUMENT_TYPES}
-          onChange={handleChange}
+          inputRef={inputRef}
+          handleChange={handleChange}
         />
       </AttachmentMenuItem>
     </>

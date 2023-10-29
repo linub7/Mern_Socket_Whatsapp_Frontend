@@ -6,6 +6,8 @@ import { PhotoIcon } from 'assets/svg';
 import AttachmentMenuItem from '../item';
 import { IMAGE_SIZE, IMAGE_TYPES } from 'constants';
 import { addFilesAction } from 'store/slices/chat';
+import { getFileType } from 'utils/helper';
+import AttachmentInput from 'components/shared/attachment-input';
 
 const AttachmentMenuPhoto = () => {
   const inputRef = useRef(null);
@@ -43,7 +45,7 @@ const AttachmentMenuPhoto = () => {
           addFilesAction({
             file: item,
             imgData: e.target.result,
-            type: item?.type?.split('/')[0],
+            type: getFileType(item?.type),
           })
         ); // imgData: based64
       };
@@ -55,13 +57,10 @@ const AttachmentMenuPhoto = () => {
       <AttachmentMenuItem btnStyle="bg-[#BF59CF]" onClick={handleClick}>
         <PhotoIcon />
       </AttachmentMenuItem>
-      <input
-        type="file"
-        multiple
-        hidden
-        ref={inputRef}
+      <AttachmentInput
         accept={IMAGE_TYPES}
-        onChange={handleChange}
+        inputRef={inputRef}
+        handleChange={handleChange}
       />
     </>
   );

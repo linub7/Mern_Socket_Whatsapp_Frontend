@@ -73,6 +73,9 @@ const chatSlice = createSlice({
       const { payload } = action;
       state.files = [...state.files, payload];
     },
+    makeEmptyFilesAction: (state, action) => {
+      state.files = [];
+    },
   },
 });
 
@@ -85,6 +88,7 @@ export const {
     addMessageToActiveConversationAction,
     updateActiveConversationAndItsMessagesAction,
     addFilesAction,
+    makeEmptyFilesAction,
   },
 } = chatSlice;
 
