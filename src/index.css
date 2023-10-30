@@ -88,6 +88,11 @@
     height: calc(100vh - 280px);
     padding: 8px 0;
   }
+
+  .fileThumbnail:hover .removeFileIcon {
+    display: block;
+    opacity: 999;
+  }
 }
 
 /* =======> Animations <======= */

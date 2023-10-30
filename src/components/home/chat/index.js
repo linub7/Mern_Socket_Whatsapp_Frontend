@@ -74,7 +74,10 @@ const HomeChatScreen = ({ onlineUsers, isTyping, setIsTyping }) => {
           userStatus={userStatus}
         />
         {files?.length > 0 ? (
-          <FilesPreview />
+          <FilesPreview
+            conversationId={activeConversation?._id}
+            token={user?.token}
+          />
         ) : (
           <>
             <HomeChatScreenMessages

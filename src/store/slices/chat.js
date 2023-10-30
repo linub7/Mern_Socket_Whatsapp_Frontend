@@ -73,6 +73,12 @@ const chatSlice = createSlice({
       const { payload } = action;
       state.files = [...state.files, payload];
     },
+    updateFilesAction: (state, action) => {
+      const { payload } = action;
+      const files = [...state.files];
+      const fileToRemove = [files[payload]];
+      state.files = files.filter((file) => !fileToRemove.includes(file));
+    },
     makeEmptyFilesAction: (state, action) => {
       state.files = [];
     },
@@ -88,6 +94,7 @@ export const {
     addMessageToActiveConversationAction,
     updateActiveConversationAndItsMessagesAction,
     addFilesAction,
+    updateFilesAction,
     makeEmptyFilesAction,
   },
 } = chatSlice;

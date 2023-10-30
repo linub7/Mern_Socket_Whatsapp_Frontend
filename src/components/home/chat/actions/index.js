@@ -32,6 +32,7 @@ const HomeChatScreenActions = ({
 
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.status);
+  const { files } = useSelector((state) => state.chat);
 
   const handleToggleEmojiPicker = () => {
     setIsEmojiVisible((prev) => !prev);
@@ -75,6 +76,11 @@ const HomeChatScreenActions = ({
     const formData = new FormData();
     formData.append('conversation', conversationId);
     formData.append('message', message);
+    formData.append('files', files);
+
+    for (let pair of formData.entries()) {
+      console.log(pair[0] + ', ' + pair[1]);
+    }
 
     // TODO: add files to formData formData.append('files', ...)
 
@@ -115,7 +121,10 @@ const HomeChatScreenActions = ({
           onChange={handleChangeInput}
           textRef={textRef}
         />
-        <HomeChatScreenSendButton disabled={!message} loading={loading} />
+        <HomeChatScreenSendButton
+          disabled={!message || loading}
+          loading={loading}
+        />
       </div>
     </form>
   );

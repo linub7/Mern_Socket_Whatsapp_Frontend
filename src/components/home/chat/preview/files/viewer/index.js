@@ -9,10 +9,11 @@ const FilePreviewViewer = ({ files, activeIdx }) => {
             className="max-w-[80%] object-contain hview"
           />
         ) : files[activeIdx]?.type === 'VIDEO' ? (
-          <img
-            src={`/images/file/${files[activeIdx]?.type}.png`}
-            alt={files[activeIdx]?.file?.name}
-          />
+          <video
+            className="w-full h-80"
+            src={files[activeIdx]?.imgData}
+            controls
+          ></video>
         ) : (
           <div className="min-w-full hview flex flex-col items-center justify-center">
             <img

@@ -62,8 +62,8 @@ export const getConversationPicture = (user, users) =>
 export const getConversationId = (user, users) =>
   users[0]?._id !== user?._id ? users[1]?._id : users[0]?._id;
 
-export const getFileType = (memType) => {
-  switch (memType) {
+export const getFileType = (mimeType) => {
+  switch (mimeType) {
     case 'text/plain':
       return 'TXT';
     case 'application/pdf':
