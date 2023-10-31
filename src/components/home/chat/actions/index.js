@@ -78,12 +78,6 @@ const HomeChatScreenActions = ({
     formData.append('message', message);
     formData.append('files', files);
 
-    for (let pair of formData.entries()) {
-      console.log(pair[0] + ', ' + pair[1]);
-    }
-
-    // TODO: add files to formData formData.append('files', ...)
-
     dispatch(setLoadingAction(true));
     const { err, data } = await sendMessageHandler(formData, token);
     if (err) {

@@ -27,11 +27,11 @@ const FilePreviewHandleAndSend = ({
             {el?.type === 'IMAGE' ? (
               <img
                 src={el?.imgData}
-                alt=""
+                alt="source"
                 className="w-full h-full object-cover"
               />
             ) : el?.type === 'VIDEO' ? (
-              <VideoThumbnail videoUrl={el?.imgData} />
+              <video src={el?.imgData}></video>
             ) : (
               <img
                 src={`/images/file/${el?.type}.png`}

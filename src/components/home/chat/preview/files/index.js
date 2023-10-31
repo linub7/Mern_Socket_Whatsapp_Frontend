@@ -40,8 +40,6 @@ const FilesPreview = ({ conversationId, token }) => {
       setLoading(false);
       return toast.error(err?.message);
     }
-
-    console.log(data?.data?.data);
     setLoading(false);
     await dispatch(makeEmptyFilesAction());
     await dispatch(addMessageToActiveConversationAction(data?.data?.data));
