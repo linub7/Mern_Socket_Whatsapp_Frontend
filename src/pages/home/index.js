@@ -15,6 +15,7 @@ import SocketContext from 'context/SocketContext';
 import HomeChatScreenCall from 'components/home/chat/call';
 
 const callData = {
+  socketId: '',
   receivingCall: false,
   callEnded: false,
 };
@@ -44,6 +45,17 @@ const Home = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
+  // call
+  useEffect(() => {
+    handleSetupMedia();
+
+    socket.on('setup-socket', (socketId) => setCall({ ...call, socketId }));
+
+    return () => {};
+  }, []);
+
+  console.log('socket id', call?.socketId);
+
   // get conversations
   useEffect(() => {
     if (user?.token) handleGetConversations();
@@ -72,6 +84,14 @@ const Home = () => {
     dispatch(setStatusAction('done'));
     dispatch(getConversationsAction(data?.data?.data));
   };
+
+  const handleSetupMedia = () =>
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: true })
+      .then((stream) => {
+        setStream(stream);
+        // myVideo.current.srcObject = stream;
+      });
 
   return (
     <>
