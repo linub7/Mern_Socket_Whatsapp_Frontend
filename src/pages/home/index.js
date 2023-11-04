@@ -12,10 +12,18 @@ import {
 import HomeWelcomeMessage from 'components/home/welcome';
 import HomeChatScreen from 'components/home/chat';
 import SocketContext from 'context/SocketContext';
+import HomeChatScreenCall from 'components/home/chat/call';
+
+const callData = {
+  receivingCall: false,
+  callEnded: false,
+};
 
 const Home = () => {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
+  const [call, setCall] = useState(callData);
+  const [callAccepted, setCallAccepted] = useState(false);
 
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
@@ -62,20 +70,27 @@ const Home = () => {
   };
 
   return (
-    <div className="h-screen dark:bg-dark_bg_1 flex items-center justify-center pt-[19px] overflow-hidden">
-      <div className="container h-screen flex">
-        <HomeSideBar onlineUsers={onlineUsers} />
-        {activeConversation?._id ? (
-          <HomeChatScreen
-            onlineUsers={onlineUsers}
-            isTyping={isTyping}
-            setIsTyping={setIsTyping}
-          />
-        ) : (
-          <HomeWelcomeMessage />
-        )}
+    <>
+      <div className="h-screen dark:bg-dark_bg_1 flex items-center justify-center pt-[19px] overflow-hidden">
+        <div className="container h-screen flex">
+          <HomeSideBar onlineUsers={onlineUsers} />
+          {activeConversation?._id ? (
+            <HomeChatScreen
+              onlineUsers={onlineUsers}
+              isTyping={isTyping}
+              setIsTyping={setIsTyping}
+            />
+          ) : (
+            <HomeWelcomeMessage />
+          )}
+        </div>
       </div>
-    </div>
+      <HomeChatScreenCall
+        call={call}
+        setCall={setCall}
+        callAccepted={callAccepted}
+      />
+    </>
   );
 };
 
