@@ -28,6 +28,8 @@ import MuteIcon from './Mute';
 import NoVideoIcon from './NoVideo';
 import ValidIcon from './Valid';
 import AddContactIcon from './AddContact';
+import VideoIcon from './Video';
+import SpeakerIcon from './Speaker';
 export {
   CommunityIcon,
   StoryIcon,
@@ -59,4 +61,6 @@ export {
   DownloadIcon,
   ValidIcon,
   AddContactIcon,
+  VideoIcon,
+  SpeakerIcon,
 };

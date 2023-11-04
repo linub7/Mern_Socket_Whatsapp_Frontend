@@ -48,6 +48,10 @@
     @apply w-[40px] h-[40px] flex items-center justify-center rounded-full active:bg-dark_hover_1;
   }
 
+  .btn_secondary {
+    @apply w-[45px] h-[45px] rounded-full flex items-center justify-center bg-dark_bg_2;
+  }
+
   .p16 {
     @apply px-[16px];
   }
