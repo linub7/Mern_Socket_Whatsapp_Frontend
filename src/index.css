@@ -110,7 +110,7 @@
   }
 
   .smallVideoCall {
-    @apply w-28 h-32 object-cover absolute bottom-4 right-2 z-30 bg-blue-500 cursor-pointer;
+    @apply w-28 h-32 object-cover absolute bottom-4 right-2 z-30 bg-blue-500 cursor-pointer rounded-lg;
   }
 
   .moveVideoCall {

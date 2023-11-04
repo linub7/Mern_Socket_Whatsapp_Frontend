@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 
@@ -24,6 +24,10 @@ const Home = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [call, setCall] = useState(callData);
   const [callAccepted, setCallAccepted] = useState(false);
+  const [stream, setStream] = useState();
+
+  const myVideo = useRef();
+  const userVideo = useRef();
 
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
@@ -89,6 +93,9 @@ const Home = () => {
         call={call}
         setCall={setCall}
         callAccepted={callAccepted}
+        userVideo={userVideo}
+        myVideo={myVideo}
+        stream={stream}
       />
     </>
   );

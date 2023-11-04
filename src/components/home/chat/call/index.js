@@ -1,10 +1,19 @@
 import { useState } from 'react';
+
 import HomeChatScreenCallActions from './actions';
 import HomeChatScreenCallArea from './area';
 import HomeChatScreenCallHeader from './header';
 import HomeChatScreenCallRinging from './ringing';
+import HomeChatScreenCallVideoStreams from './video-streams';
 
-const HomeChatScreenCall = ({ call, callAccepted, setCall }) => {
+const HomeChatScreenCall = ({
+  call,
+  callAccepted,
+  setCall,
+  myVideo,
+  userVideo,
+  stream,
+}) => {
   const [showActions, setShowActions] = useState(false);
 
   const { receivingCall, callEnded } = call;
@@ -23,6 +32,11 @@ const HomeChatScreenCall = ({ call, callAccepted, setCall }) => {
           <HomeChatScreenCallArea name={'Mehrdad'} />
           {showActions && <HomeChatScreenCallActions />}
         </div>
+        <HomeChatScreenCallVideoStreams
+          myVideo={myVideo}
+          userVideo={userVideo}
+          showActions={showActions}
+        />
       </div>
       {receivingCall && !callAccepted && (
         <HomeChatScreenCallRinging call={call} setCall={setCall} />
