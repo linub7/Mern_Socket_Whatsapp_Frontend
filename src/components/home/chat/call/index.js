@@ -1,3 +1,4 @@
+import HomeChatScreenCallArea from './area';
 import HomeChatScreenCallHeader from './header';
 import HomeChatScreenCallRinging from './ringing';
 
@@ -10,6 +11,7 @@ const HomeChatScreenCall = ({ call, callAccepted, setCall }) => {
       <div>
         <div>
           <HomeChatScreenCallHeader />
+          <HomeChatScreenCallArea name={'Mehrdad'} />
         </div>
       </div>
       {receivingCall && !callAccepted && (
