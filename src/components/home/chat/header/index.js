@@ -1,7 +1,7 @@
 import HomeChatScreenHeaderLeftSide from './left';
 import HomeChatScreenHeaderRightSide from './right';
 
-const HomeChatScreenHeader = ({ name, source, userStatus }) => {
+const HomeChatScreenHeader = ({ name, source, userStatus, handleCallUser }) => {
   return (
     <div className="h-[59px] dark:bg-dark_bg_2 flex items-center p16 select-none">
       <div className="w-full flex items-center justify-between">
@@ -10,7 +10,7 @@ const HomeChatScreenHeader = ({ name, source, userStatus }) => {
           source={source}
           userStatus={userStatus}
         />
-        <HomeChatScreenHeaderRightSide />
+        <HomeChatScreenHeaderRightSide handleCallUser={handleCallUser} />
       </div>
     </div>
   );

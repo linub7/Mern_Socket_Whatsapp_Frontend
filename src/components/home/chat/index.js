@@ -16,7 +16,12 @@ import {
 } from 'utils/helper';
 import FilesPreview from './preview/files';
 
-const HomeChatScreen = ({ onlineUsers, isTyping, setIsTyping }) => {
+const HomeChatScreen = ({
+  onlineUsers,
+  isTyping,
+  setIsTyping,
+  handleCallUser,
+}) => {
   const [userStatus, setUserStatus] = useState('offline');
 
   const dispatch = useDispatch();
@@ -72,6 +77,7 @@ const HomeChatScreen = ({ onlineUsers, isTyping, setIsTyping }) => {
           picture={activeConversation?.picture}
           source={source}
           userStatus={userStatus}
+          handleCallUser={handleCallUser}
         />
         {files?.length > 0 ? (
           <FilesPreview

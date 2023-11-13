@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
+import Peer from 'simple-peer';
 
 import HomeSideBar from 'components/home/sidebar';
 import { setStatusAction } from 'store/slices/status';
@@ -13,11 +14,20 @@ import HomeWelcomeMessage from 'components/home/welcome';
 import HomeChatScreen from 'components/home/chat';
 import SocketContext from 'context/SocketContext';
 import HomeChatScreenCall from 'components/home/chat/call';
+import {
+  getConversationId,
+  getConversationName,
+  getConversationPicture,
+  getImage,
+} from 'utils/helper';
 
 const callData = {
   socketId: '',
   receivingCall: false,
   callEnded: false,
+  name: '',
+  picture: '',
+  signal: '',
 };
 
 const Home = () => {
@@ -47,14 +57,24 @@ const Home = () => {
 
   // call
   useEffect(() => {
-    handleSetupMedia();
+    // handleSetupMedia();
 
     socket.on('setup-socket', (socketId) => setCall({ ...call, socketId }));
 
-    return () => {};
-  }, []);
+    socket.on('call-user', (data) => {
+      console.log('call-user data', data);
+      setCall({
+        ...call,
+        socketId: data?.from,
+        name: data?.name,
+        picture: getImage(data?.picture),
+        signal: data?.signal,
+        receivingCall: true,
+      });
+    });
 
-  console.log('socket id', call?.socketId);
+    return () => {};
+  }, [call]);
 
   // get conversations
   useEffect(() => {
@@ -85,13 +105,41 @@ const Home = () => {
     dispatch(getConversationsAction(data?.data?.data));
   };
 
-  const handleSetupMedia = () =>
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
-      .then((stream) => {
-        setStream(stream);
-        // myVideo.current.srcObject = stream;
-      });
+  // const handleSetupMedia = () =>
+  //   navigator.mediaDevices
+  //     .getUserMedia({ video: true, audio: true })
+  //     .then((stream) => {
+  //       setStream(stream);
+  //       // myVideo.current.srcObject = stream;
+  //     });
+
+  // const handleEnableMedia = () => {
+  //   myVideo.current.srcObject = stream;
+  // };
+
+  // const handleCallUser = () => {
+  //   handleEnableMedia();
+  //   setCall({
+  //     ...call,
+  //     name: getConversationName(user, activeConversation?.users),
+  //     picture: getConversationPicture(user, activeConversation?.users),
+  //   });
+  //   const peer = new Peer({
+  //     initiator: true,
+  //     trickle: false,
+  //     stream,
+  //   });
+
+  //   peer.on('signal', (data) => {
+  //     socket.emit('call-user', {
+  //       userToCall: getConversationId(user, activeConversation?.users),
+  //       signal: data,
+  //       from: call?.socketId,
+  //       name: user?.name,
+  //       picture: user?.picture?.url,
+  //     });
+  //   });
+  // };
 
   return (
     <>
@@ -103,20 +151,21 @@ const Home = () => {
               onlineUsers={onlineUsers}
               isTyping={isTyping}
               setIsTyping={setIsTyping}
+              handleCallUser={() => {}}
             />
           ) : (
             <HomeWelcomeMessage />
           )}
         </div>
       </div>
-      <HomeChatScreenCall
+      {/* <HomeChatScreenCall
         call={call}
         setCall={setCall}
         callAccepted={callAccepted}
         userVideo={userVideo}
         myVideo={myVideo}
         stream={stream}
-      />
+      /> */}
     </>
   );
 };

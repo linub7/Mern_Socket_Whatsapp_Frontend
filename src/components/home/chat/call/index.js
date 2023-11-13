@@ -18,30 +18,36 @@ const HomeChatScreenCall = ({
 
   const { receivingCall, callEnded } = call;
 
+  console.log({ receivingCall, callAccepted });
+
   const handleShowActions = () => setShowActions(true);
   const handleHideActions = () => setShowActions(false);
   return (
-    <div
-      className={`fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[550px] z-10 rounded-2xl overflow-hidden callbg`}
-      onMouseOver={handleShowActions}
-      onMouseOut={handleHideActions}
-    >
-      <div>
+    <>
+      <div
+        className={`fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[550px] z-10 rounded-2xl overflow-hidden callbg ${
+          receivingCall && !callAccepted ? 'hidden' : ''
+        }`}
+        onMouseOver={handleShowActions}
+        onMouseOut={handleHideActions}
+      >
         <div>
-          <HomeChatScreenCallHeader />
-          <HomeChatScreenCallArea name={'Mehrdad'} />
-          {showActions && <HomeChatScreenCallActions />}
+          <div>
+            <HomeChatScreenCallHeader />
+            <HomeChatScreenCallArea name={'Mehrdad'} />
+            {showActions && <HomeChatScreenCallActions />}
+          </div>
+          <HomeChatScreenCallVideoStreams
+            myVideo={myVideo}
+            userVideo={userVideo}
+            showActions={showActions}
+          />
         </div>
-        <HomeChatScreenCallVideoStreams
-          myVideo={myVideo}
-          userVideo={userVideo}
-          showActions={showActions}
-        />
       </div>
-      {receivingCall && !callAccepted && (
+      {receivingCall && !callAccepted ? (
         <HomeChatScreenCallRinging call={call} setCall={setCall} />
-      )}
-    </div>
+      ) : null}
+    </>
   );
 };
 

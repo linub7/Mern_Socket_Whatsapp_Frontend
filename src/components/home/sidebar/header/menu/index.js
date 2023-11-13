@@ -6,7 +6,7 @@ import HomeSidebarHeaderMenuItem from './item';
 import { logoutAction } from 'store/slices/user';
 import { signoutHandler } from 'api/auth';
 
-const HomeSidebarHeaderMenu = ({ token }) => {
+const HomeSidebarHeaderMenu = ({ token, handleCreateGroup }) => {
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
@@ -22,7 +22,10 @@ const HomeSidebarHeaderMenu = ({ token }) => {
   return (
     <div className="absolute top-10 right-1 z-50 dark:bg-dark_bg_2 dark:text-dark_text_1 shadow-md w-52">
       <ul>
-        <HomeSidebarHeaderMenuItem title={'New Group'} />
+        <HomeSidebarHeaderMenuItem
+          title={'New Group'}
+          onClick={handleCreateGroup}
+        />
         <HomeSidebarHeaderMenuItem title={'New Community'} />
         <HomeSidebarHeaderMenuItem title={'Starred Message'} />
         <HomeSidebarHeaderMenuItem title={'Settings'} />
