@@ -1,23 +1,34 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 
 import { ReturnIcon } from 'assets/svg';
 import HomeSidebarHeaderCreateGroupUnderlineInput from './underline-input';
 import HomeSidebarHeaderCreateGroupMultipleSelect from './multiple-select';
 import { searchUsersHandler } from 'api/user';
-import toast from 'react-hot-toast';
 import { getImage } from 'utils/helper';
 import HomeSidebarHeaderCreateGroupSubmitButton from './submit-button';
-import { useSelector } from 'react-redux';
+import { createGroupConversationHandler } from 'api/conversations';
+import SocketContext from 'context/SocketContext';
+import {
+  addToConversationsAction,
+  setActiveConversationAction,
+} from 'store/slices/chat';
 
 const HomeSidebarHeaderCreateGroup = ({
   user,
   handleCloseCreateGroupMenu = () => {},
+  setShowCreateGroup = () => {},
 }) => {
   const [name, setName] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
 
-  const { loading } = useSelector((state) => state.status);
+  const { loading, status } = useSelector((state) => state.status);
+  const { conversations } = useSelector((state) => state.chat);
+  const dispatch = useDispatch();
+
+  const socket = useContext(SocketContext);
 
   const handleChangeInput = (e) => setName(e.target.value);
 
@@ -55,8 +66,31 @@ const HomeSidebarHeaderCreateGroup = ({
     }
   };
 
-  const handleCreateGroup = () => {
-    console.log('handleCreateGroup');
+  const handleCreateGroup = async () => {
+    if (status === 'loading') return;
+    let users = [];
+    for (const el of selectedUsers) {
+      users?.push(el?.value);
+    }
+    const { err, data } = await createGroupConversationHandler(
+      users,
+      name,
+      user?.token
+    );
+
+    if (err) {
+      console.log(err);
+      return toast.error(err?.message);
+    }
+    await dispatch(setActiveConversationAction(data?.data?.data));
+    socket.emit('join-conversation', data?.data?.data?._id);
+    const idx = conversations.findIndex(
+      (item) => item?._id === data?.data?.data?._id
+    );
+    if (idx === -1) {
+      dispatch(addToConversationsAction(data?.data?.data));
+    }
+    setShowCreateGroup(false);
   };
 
   return (
@@ -79,7 +113,7 @@ const HomeSidebarHeaderCreateGroup = ({
         />
         <HomeSidebarHeaderCreateGroupSubmitButton
           loading={loading}
-          disabled={loading || selectedUsers?.length < 2 || !name}
+          disabled={loading || selectedUsers?.length < 1 || !name}
           onClick={handleCreateGroup}
         />
       </div>

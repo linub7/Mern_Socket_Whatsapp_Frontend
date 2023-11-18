@@ -1,4 +1,5 @@
 import moment from 'moment';
+
 import FileImageVideo from './file-image-video';
 import FileOthers from './file-others';
 
@@ -7,6 +8,9 @@ const HomeChatScreenMessageItemIncludeFile = ({
   me,
   message,
   createdAt,
+  isGroup = false,
+  senderName,
+  source,
 }) => {
   return (
     <div
@@ -14,7 +18,22 @@ const HomeChatScreenMessageItemIncludeFile = ({
         me ? 'ml-auto justify-end' : ''
       }`}
     >
-      <div>
+      <div
+        className={
+          isGroup
+            ? `flex ${!me ? 'flex-row' : 'flex-row-reverse'} items-end gap-1`
+            : ''
+        }
+      >
+        {isGroup && (
+          <div className="w-48">
+            <img
+              src={source}
+              alt={senderName}
+              className="w-8 h-8 rounded-full m-2"
+            />
+          </div>
+        )}
         <div
           className={`relative h-full dark:text-dark_text_1 rounded-lg ${
             me

@@ -58,6 +58,7 @@ const HomeSidebarHeader = () => {
         <HomeSidebarHeaderCreateGroup
           user={user}
           handleCloseCreateGroupMenu={handleCloseCreateGroupMenu}
+          setShowCreateGroup={setShowCreateGroup}
         />
       )}
     </>

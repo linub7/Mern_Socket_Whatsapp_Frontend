@@ -9,6 +9,7 @@ import {
 import HomeSideBarConversationItemLeftSide from './left';
 import HomeSideBarConversationItemRightSide from './right';
 import HomeSideBarBorderBottom from '../../border-bottom';
+import { DEFAULT_GROUP_CHAT_PICTURE } from 'constants';
 
 const HomeSideBarConversationItem = ({
   onlineUsers,
@@ -17,7 +18,19 @@ const HomeSideBarConversationItem = ({
   onClick = () => {},
 }) => {
   const [isOnline, setIsOnline] = useState(false);
+  const [source, setSource] = useState();
   const { user } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    const conversationImage = !item?.isGroup
+      ? getConversationPicture(user, item?.users)
+      : undefined;
+    setSource(
+      item?.isGroup ? DEFAULT_GROUP_CHAT_PICTURE : getImage(conversationImage)
+    );
+
+    return () => {};
+  }, [item?.isGroup]);
 
   useEffect(() => {
     for (const el of item?.users) {
@@ -32,9 +45,10 @@ const HomeSideBarConversationItem = ({
     return () => {};
   }, [onlineUsers?.length]);
 
-  const convName = getConversationName(user, item?.users);
-  const conversationImage = getConversationPicture(user, item?.users);
-  const source = getImage(conversationImage);
+  const convName =
+    item?.name !== 'conversation name'
+      ? item?.name
+      : getConversationName(user, item?.users);
 
   return (
     <li

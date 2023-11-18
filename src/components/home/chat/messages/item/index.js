@@ -1,13 +1,31 @@
 import moment from 'moment';
 
+import { getImage } from 'utils/helper';
+
 const HomeChatScreenMessageItem = ({ item, me }) => {
+  const source = getImage(item?.sender?.picture);
   return (
     <div
       className={`w-full flex mt-2 space-x-3 max-w-xs ${
         me ? 'ml-auto justify-end' : ''
       }`}
     >
-      <div>
+      <div
+        className={
+          item?.conversation?.isGroup
+            ? `flex ${!me ? 'flex-row' : 'flex-row-reverse'} items-end gap-1`
+            : ''
+        }
+      >
+        {item?.conversation?.isGroup && (
+          <div className="">
+            <img
+              src={source}
+              alt={item?.sender?.name}
+              className="w-8 h-8 rounded-full"
+            />
+          </div>
+        )}
         <div
           className={`relative h-full dark:text-dark_text_1 p-2 rounded-lg ${
             me ? 'bg-green_3' : 'dark:bg-dark_bg_2'

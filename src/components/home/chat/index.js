@@ -9,12 +9,14 @@ import { getConversationMessagesHandler } from 'api/messages';
 import { setActiveConversationMessagesAction } from 'store/slices/chat';
 import HomeChatScreenActions from './actions';
 import {
+  countOnlineUsersInGroupConversation,
   getConversationName,
   getConversationPicture,
   getImage,
   getReceiverId,
 } from 'utils/helper';
 import FilesPreview from './preview/files';
+import { DEFAULT_GROUP_CHAT_PICTURE } from 'constants';
 
 const HomeChatScreen = ({
   onlineUsers,
@@ -34,7 +36,9 @@ const HomeChatScreen = ({
     user,
     activeConversation?.users
   );
-  const source = getImage(conversationImage);
+  const source = activeConversation?.isGroup
+    ? DEFAULT_GROUP_CHAT_PICTURE
+    : getImage(conversationImage);
 
   useEffect(() => {
     const handleGetActiveConversationMessages = async () => {
@@ -67,16 +71,25 @@ const HomeChatScreen = ({
     return () => {};
   }, [receiverId, onlineUsers?.length]);
 
-  const convName = getConversationName(user, activeConversation?.users);
+  const convName =
+    activeConversation?.name !== 'conversation name'
+      ? activeConversation?.name
+      : getConversationName(user, activeConversation?.users);
+
+  const onlineUsersCountInGroupConversation =
+    countOnlineUsersInGroupConversation(onlineUsers, activeConversation?.users);
 
   return (
     <div className="relative w-full h-full border-l dark:border-l-dark_border_2 select-none overflow-hidden">
       <div>
         <HomeChatScreenHeader
           name={convName}
-          picture={activeConversation?.picture}
           source={source}
-          userStatus={userStatus}
+          userStatus={
+            activeConversation?.isGroup
+              ? `${onlineUsersCountInGroupConversation} online users`
+              : userStatus
+          }
           handleCallUser={handleCallUser}
         />
         {files?.length > 0 ? (

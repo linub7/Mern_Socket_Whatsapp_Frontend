@@ -7,3 +7,6 @@ export const DOCUMENT_TYPES =
   'application/pdf,text/plain,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.rar,application/vnd.zip,audio/mpeg,audio/wav';
 
 export const WAITING_TIME = 5;
+
+export const DEFAULT_GROUP_CHAT_PICTURE =
+  'https://notwhatsapp.netlify.app/img/defaultgroup.png';

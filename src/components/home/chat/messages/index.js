@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import HomeChatScreenMessageItem from './item';
 import HomeChatScreenIsTyping from '../is-typing';
 import HomeChatScreenMessageItemIncludeFile from './item/include-file';
+import { getImage } from 'utils/helper';
 
 const HomeChatScreenMessages = ({ messages, user, isTyping }) => {
   const endRef = useRef();
@@ -26,16 +27,27 @@ const HomeChatScreenMessages = ({ messages, user, isTyping }) => {
                   <HomeChatScreenMessageItemIncludeFile
                     key={j}
                     file={file}
-                    me={item?.sender?.id === user?.id}
+                    me={
+                      item?.sender?.id
+                        ? item?.sender?.id === user?.id
+                        : item?.sender === user?.id
+                    }
                     message={item?.message}
                     createdAt={item?.createdAt}
+                    isGroup={item?.conversation?.isGroup}
+                    senderName={item?.sender?.name}
+                    source={getImage(item?.sender?.picture)}
                   />
                 ))
               : null}
             {item?.message?.length > 0 ? (
               <HomeChatScreenMessageItem
                 item={item}
-                me={item?.sender?.id === user?.id}
+                me={
+                  item?.sender?.id
+                    ? item?.sender?.id === user?.id
+                    : item?.sender === user?.id
+                }
               />
             ) : null}
           </React.Fragment>

@@ -24,11 +24,15 @@ const HomeSideBarConversations = ({ onlineUsers }) => {
   const handleClickConversation = async (item) => {
     if (activeConversation?._id === item?._id) return;
     dispatch(makeEmptyFilesAction());
-    const receiverId = getReceiverId(user, item?.users);
+    const receiverId = item?.isGroup
+      ? item?._id
+      : getReceiverId(user, item?.users);
+    const isGroup = item?.isGroup;
 
     dispatch(setStatusAction('loading'));
     const { err, data } = await openOrCreateConversationHandler(
       receiverId,
+      isGroup,
       user?.token
     );
     if (err) {
@@ -49,7 +53,8 @@ const HomeSideBarConversations = ({ onlineUsers }) => {
           ?.filter(
             (conversation) =>
               conversation?.latestMessage ||
-              conversation?._id === activeConversation?._id
+              conversation?._id === activeConversation?._id ||
+              conversation?.isGroup === true
           )
           .map((item, index) => (
             <HomeSideBarConversationItem

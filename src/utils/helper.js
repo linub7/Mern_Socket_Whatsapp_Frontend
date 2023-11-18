@@ -93,3 +93,29 @@ export const getFileType = (mimeType) => {
       return 'IMAGE';
   }
 };
+
+export const countOnlineUsersInGroupConversation = (
+  onlineUsers,
+  conversationUsers
+) => {
+  // Create a map to store the online user IDs and their corresponding socket IDs
+  const onlineUserMap = new Map();
+  for (const user of onlineUsers) {
+    onlineUserMap.set(user.userId, user.socketId);
+  }
+
+  // Create a counter to track the number of matching elements
+  let matchingCount = 0;
+
+  // Iterate over the conversation users array
+  for (const conversationUser of conversationUsers) {
+    // Check if the user ID from the conversation user matches an ID in the online user map
+    if (onlineUserMap.has(conversationUser.id)) {
+      // If it matches, increment the counter
+      matchingCount += 1;
+    }
+  }
+
+  // Return the count of matching elements
+  return matchingCount;
+};

@@ -18,8 +18,6 @@ const HomeChatScreenCall = ({
 
   const { receivingCall, callEnded } = call;
 
-  console.log({ receivingCall, callAccepted });
-
   const handleShowActions = () => setShowActions(true);
   const handleHideActions = () => setShowActions(false);
   return (
