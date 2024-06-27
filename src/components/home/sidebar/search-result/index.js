@@ -24,8 +24,10 @@ const HomeSideBarSearchResult = ({
 
   const handleClickSearchResultItem = async (userId) => {
     dispatch(setStatusAction('loading'));
+    const isGroup = false;
     const { err, data } = await openOrCreateConversationHandler(
       userId,
+      isGroup,
       user?.token
     );
     if (err) {
